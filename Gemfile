@@ -44,8 +44,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails', '~> 6.0.0'
-  gem 'simplecov', require: false
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'simplecov', require: false
 end
 
 group :development do
@@ -53,5 +53,5 @@ group :development do
   # gem "spring"
 end
 
+gem 'jsonapi-serializer'
 gem 'pry'
-gem "jsonapi-serializer"

@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'merchant items api' do
-  
-  before do 
+  before do
     @merchant = create(:merchant)
   end
 
