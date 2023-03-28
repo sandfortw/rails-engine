@@ -53,9 +53,23 @@ describe 'items api' do
     end
 
   it 'can create an item' do
+    new_item = create(:item, merchant_id: @merchant.id)
+    post "/api/v1/items/", params: {
+      "name": new_item.name,
+      "description": new_item.description,
+      "unit_price": new_item.unit_price,
+      "merchant_id": @merchant.id
+    }
 
-    post "/api/v1/items/
-
+    expect(response).to be_successful
+    expect(JSON.parse(response.body)['data']).to be_a Hash
+    expect(JSON.parse(response.body)['data']['type']).to eq('item')
+    expect(JSON.parse(response.body, symbolize_names: true)[:data][:attributes]).to eq(
+      { name: new_item.name,
+        description: new_item.description,
+        unit_price: new_item.unit_price,
+        merchant_id: @merchant.id }
+    )
   end
 
   it 'can update an item' do
