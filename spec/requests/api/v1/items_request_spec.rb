@@ -72,9 +72,43 @@ describe 'items api' do
     )
   end
 
-  it 'can update an item' do
+  describe 'updating an item' do
+    it 'can update an item' do
+      put "/api/v1/items/#{@item1.id}", params: {
+        "name": @item1.name,
+        "description": "A new description",
+        "unit_price": @item1.unit_price,
+        "merchant_id": @merchant.id
+      }
+
+      expect(response).to be_successful
+      expect(JSON.parse(response.body)['data']).to be_a Hash
+      expect(JSON.parse(response.body)['data']['type']).to eq('item')
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:attributes]).to eq(
+        { name: @item1.name,
+          description: "A new description",
+          unit_price: @item1.unit_price,
+          merchant_id: @merchant.id }
+      )
+    end
+
+    it 'returns bad request error if item invalid' do
+      put "/api/v1/items/#{@item1.id}", params: {
+        "name": @item1.name,
+        "description": "A new description",
+        "unit_price": "a non numeric value",
+        "merchant_id": @merchant.id
+      }
+      expect(response.status).to eq(400)
+    end
   end
 
-  it 'can delete an item' do
+  describe 'delete' do
+    it 'can delete an item' do
+      expect(Item.all).to include(@item1)
+      delete "/api/v1/items/#{@item1.id}"
+      expect(Item.all).to_not include(@item1)
+
+    end
   end
 end

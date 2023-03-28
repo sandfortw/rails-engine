@@ -15,12 +15,23 @@ module Api
 
       def create
         item = Item.create(item_params)
-        render json: ItemSerializer.new(item), status: :created
+        render json: ItemSerializer.new(item), status: :created if item.save
       end
 
+      def update
+        item = Item.find(params[:id])
+        if item.update(item_params)
+          render json: ItemSerializer.new(item), status: :accepted
+        else
+          render status: :bad_request
+        end
+      end
 
+      def destroy
+        item = Item.find(params[:id])
+        item.destroy
+      end
       private
-
       def item_params
         params.permit(:name, :description, :unit_price, :merchant_id)
       end
