@@ -8,4 +8,9 @@ class Merchant < ApplicationRecord
       .order('LOWER(name)')
       .first
   end
+
+  def self.find_all(search_string)
+    where('merchants.name ILIKE ?', "%#{search_string}%")
+    .order('LOWER(name)')
+  end
 end
