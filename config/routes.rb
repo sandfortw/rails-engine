@@ -1,6 +1,15 @@
-Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+# frozen_string_literal: true
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :merchants, only: %i[index show] do
+        resources :items, only: :index, controller: 'merchants/items'
+      end
+
+      resources :items do
+        resources :merchants, only: :index, controller: 'items/merchants', as: 'merchant', path: 'merchant'
+      end
+    end
+  end
 end
