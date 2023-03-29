@@ -16,7 +16,7 @@ RSpec.describe 'Merchant Search Api', type: :request do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:attributes][:name]).to eq('Ring World')
     end
 
-    xit 'returns empty data object if no items are found' do #REFACTOR
+    xit 'returns empty data object if no merchants are found' do #REFACTOR
       get '/api/v1/merchants/find?name=123'
 
       expect(response).to be_successful
