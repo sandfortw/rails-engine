@@ -51,7 +51,7 @@ RSpec.describe 'Search Request API', type: :request do
           expect(response.status).to eq(400)
         end
 
-        it 'should return an error when name is not found' do
+        it 'should return a blank array of data when name is not found' do
           get "/api/v1/items/find_all?name=turing"
 
           expect(response.status).to eq(200)

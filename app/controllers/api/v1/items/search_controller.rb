@@ -6,7 +6,7 @@ module Api
       class SearchController < ApplicationController
         def index
           if invalid_search(params)
-            render json: { data: {}, errors: 'Bad Request'}, status: :bad_request
+            render json: { data: [], errors: 'Bad Request'}, status: :bad_request
           else
             render json: ItemSerializer.new(Item.find_all(params))
           end

@@ -10,7 +10,7 @@ module Api
           if !merchant.blank?
             render json: MerchantSerializer.new(merchant)
           else
-            render json: { data: {} }
+            render json: { data: [] }
           end
         end
       end
