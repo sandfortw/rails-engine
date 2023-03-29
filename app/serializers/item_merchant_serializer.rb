@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-class MerchantSerializer
+class ItemMerchantSerializer
   include JSONAPI::Serializer
+  set_type :merchant
   attributes :name
-  has_many :items
-
-\
+end
