@@ -32,6 +32,8 @@ module Api
         item.destroy
       end
 
+   
+
       private
 
       def item_params

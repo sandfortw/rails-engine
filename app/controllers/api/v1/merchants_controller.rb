@@ -12,6 +12,16 @@ module Api
         merchant = Merchant.find(params[:id])
         render json: MerchantSerializer.new(merchant)
       end
+
+      def find
+        search = params[:name]
+        merchant = Merchant.where("merchants.name ILIKE ?", "%#{search}%").first
+        if !merchant.blank?
+          render json: MerchantSerializer.new(merchant)
+        else
+          render json: {data: {}}
+        end
+      end
     end
   end
 end
