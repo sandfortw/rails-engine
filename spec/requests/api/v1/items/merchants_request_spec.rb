@@ -17,10 +17,8 @@ describe 'Item\'s merchant API' do
   end
 
   it 'should return 404 if the item does not exist' do
-    get "/api/v1/items/non_number/merchant"
+    get '/api/v1/items/non_number/merchant'
 
     expect(response).to have_http_status(404)
   end
-
-
 end
