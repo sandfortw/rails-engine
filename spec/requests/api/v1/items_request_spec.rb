@@ -50,11 +50,11 @@ describe 'items api' do
         unit_price: @item4.unit_price,
         merchant_id: @merchant.id }
     )
-    end
+  end
 
   it 'can create an item' do
     new_item = create(:item, merchant_id: @merchant.id)
-    post "/api/v1/items/", params: {
+    post '/api/v1/items/', params: {
       "name": new_item.name,
       "description": new_item.description,
       "unit_price": new_item.unit_price,
@@ -76,7 +76,7 @@ describe 'items api' do
     it 'can update an item' do
       put "/api/v1/items/#{@item1.id}", params: {
         "name": @item1.name,
-        "description": "A new description",
+        "description": 'A new description',
         "unit_price": @item1.unit_price,
         "merchant_id": @merchant.id
       }
@@ -86,7 +86,7 @@ describe 'items api' do
       expect(JSON.parse(response.body)['data']['type']).to eq('item')
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:attributes]).to eq(
         { name: @item1.name,
-          description: "A new description",
+          description: 'A new description',
           unit_price: @item1.unit_price,
           merchant_id: @merchant.id }
       )
@@ -95,8 +95,8 @@ describe 'items api' do
     it 'returns bad request error if item invalid' do
       put "/api/v1/items/#{@item1.id}", params: {
         "name": @item1.name,
-        "description": "A new description",
-        "unit_price": "a non numeric value",
+        "description": 'A new description',
+        "unit_price": 'a non numeric value',
         "merchant_id": @merchant.id
       }
       expect(response.status).to eq(400)
@@ -108,7 +108,6 @@ describe 'items api' do
       expect(Item.all).to include(@item1)
       delete "/api/v1/items/#{@item1.id}"
       expect(Item.all).to_not include(@item1)
-
     end
   end
 end

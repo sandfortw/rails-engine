@@ -32,7 +32,8 @@ module Api
         item.destroy
       end
 
-    private
+      private
+
       def item_params
         params.permit(:name, :description, :unit_price, :merchant_id)
       end
