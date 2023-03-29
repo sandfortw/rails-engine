@@ -8,7 +8,7 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe '.find_one(search_string)' do
-    before do 
+    before do
       @merchant = create(:merchant, name: 'Turing')
       @merchant2 = create(:merchant, name: 'Ring World')
     end

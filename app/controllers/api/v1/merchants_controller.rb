@@ -12,8 +12,6 @@ module Api
         merchant = Merchant.find(params[:id])
         render json: MerchantSerializer.new(merchant)
       end
-
-    
     end
   end
 end
