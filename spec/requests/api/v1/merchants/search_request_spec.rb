@@ -18,11 +18,11 @@ RSpec.describe 'Merchant Search Api', type: :request do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:attributes][:name]).to eq('Ring World')
     end
 
-    xit 'returns empty data object if no merchants are found' do # REFACTOR
+    it 'returns empty data object if no merchants are found' do #Refactor
       get '/api/v1/merchants/find?name=123'
 
       expect(response).to be_successful
-      expect(JSON.parse(response.body, symbolize_names: true)).to eq({ data: [] })
+      expect(JSON.parse(response.body, symbolize_names: true)).to eq( {:data=>{}, :detail=>"No merchant found", :status=>200})
     end
   end
 
@@ -36,7 +36,20 @@ RSpec.describe 'Merchant Search Api', type: :request do
       expect(JSON.parse(response.body, symbolize_names: true)[:data].last[:attributes][:name]).to eq('Turing')
     end
 
-    xit 'TODO: Sad path' do
+    describe 'sad paths' do
+      it 'should return an empty array when there is no matching result' do
+        get '/api/v1/merchants/find_all?name=douglas'
+        expect(response).to be_successful
+        expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq([])
+      end
+
+    
+      it 'should return an empty array when there is a blank input' do
+        get '/api/v1/merchants/find_all?name='
+        expect(response).to have_http_status(400)
+        expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq([])
+      end
+
     end
   end
 end
