@@ -27,7 +27,6 @@ RSpec.describe Merchant, type: :model do
     end
   end
 
-
   describe '.find_all(search_string)' do
     it 'can search parts of names' do
       expect(Merchant.find_all('ing')).to contain_exactly(@merchant, @merchant2)

@@ -6,7 +6,7 @@ module Api
       class ItemsController < ApplicationController
         def index
           items = Item.where(merchant_id: params[:merchant_id])
-          return render status: :not_found if items.empty?
+          return render json: ErrorPoro.render_hash('No items found', 404), status: 404 if items.empty?
 
           render json: ItemSerializer.new(items)
         end

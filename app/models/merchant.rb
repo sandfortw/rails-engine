@@ -11,6 +11,6 @@ class Merchant < ApplicationRecord
 
   def self.find_all(search_string)
     where('merchants.name ILIKE ?', "%#{search_string}%")
-    .order('LOWER(name)')
+      .order('LOWER(name)')
   end
 end
