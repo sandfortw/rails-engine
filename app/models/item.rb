@@ -14,7 +14,7 @@ class Item < ApplicationRecord
     end
   end
 
-  def self.find_one(params) 
+  def self.find_one(params)
     if params[:name]
       find_by_name(params).first
     else
