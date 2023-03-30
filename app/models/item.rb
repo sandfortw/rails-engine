@@ -6,7 +6,7 @@ class Item < ApplicationRecord
   validates :name, :description, presence: true
   validates_numericality_of :unit_price, :merchant_id
 
-  def self.find_all(params) # pull this into the controller
+  def self.find_all(params)
     if params[:name]
       find_by_name(params)
     else
@@ -14,7 +14,7 @@ class Item < ApplicationRecord
     end
   end
 
-  def self.find_one(params) # pull this into the controller
+  def self.find_one(params) 
     if params[:name]
       find_by_name(params).first
     else
