@@ -14,6 +14,14 @@ class Item < ApplicationRecord
     end
   end
 
+  def self.find_one(params)
+    if params[:name]
+      find_by_name(params).first
+    else
+      find_by_price(params).first
+    end
+  end
+  
   #Private Methods (rubocop does not like 'useless' private access modifier)
   def self.find_by_price(params)
     min = params[:min_price] || 0

@@ -2,16 +2,17 @@ require 'rails_helper'
 
 RSpec.describe 'Search Request API', type: :request do
 
-  describe 'GET /api/vi/items/find_all' do
+  before do
+    @merchant = create(:merchant)
+    @item_a = create(:item, name: "AHello World", merchant_id: @merchant.id)
+    @item_b= create(:item, name: "bHello World", merchant_id: @merchant.id)
+    @item_c = create(:item, name: "cHello World", merchant_id: @merchant.id)
+    @item_d = create(:item, name: "dHello World", merchant_id: @merchant.id)
+  end
+
+  describe 'find_all' do
     context 'name only search, ?name=query' do
       context 'happy paths' do
-        before do
-          @merchant = create(:merchant)
-          @item_a = create(:item, name: "AHello World", merchant_id: @merchant.id)
-          @item_b= create(:item, name: "bHello World", merchant_id: @merchant.id)
-          @item_c = create(:item, name: "cHello World", merchant_id: @merchant.id)
-          @item_d = create(:item, name: "dHello World", merchant_id: @merchant.id)
-        end
 
         it 'should find all items by name fragment' do
           get "/api/v1/items/find_all?name=hello"
@@ -58,6 +59,15 @@ RSpec.describe 'Search Request API', type: :request do
           expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq([])
         end
       end
+    end
+  end
+
+  describe '/items/find' do
+    
+    it 'NOMATCH' do
+      get "/api/v1/items/find?name=NOMATCH"
+
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq([])
     end
   end
 end
