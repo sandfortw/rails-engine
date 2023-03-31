@@ -19,8 +19,6 @@ module Api
           merchant = Merchant.find_one(params[:name]) unless params[:name].blank?
           if !merchant.blank? || params[:name].blank?
             render json: MerchantSerializer.new(merchant)
-          elsif merchant.nil? && params[:name].blank?
-            render json: ErrorPoro.new('Bad Request', 400).serialize, status: :bad_request
           else
             render json: ErrorPoro.new('Bad Request', 200).cerealize, status: :ok
           end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ErrorPoro
   attr_reader :message, :status
 
