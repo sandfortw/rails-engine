@@ -50,25 +50,40 @@ describe 'items api' do
         merchant_id: @merchant.id }
     )
   end
+  describe 'creating a new item' do
+    it 'can create an item' do
+      new_item = create(:item, merchant_id: @merchant.id)
+      post '/api/v1/items/', params: {
+        "name": new_item.name,
+        "description": new_item.description,
+        "unit_price": new_item.unit_price,
+        "merchant_id": @merchant.id
+      }
 
-  it 'can create an item' do
-    new_item = create(:item, merchant_id: @merchant.id)
-    post '/api/v1/items/', params: {
-      "name": new_item.name,
-      "description": new_item.description,
-      "unit_price": new_item.unit_price,
-      "merchant_id": @merchant.id
-    }
+      expect(response).to be_successful
+      expect(JSON.parse(response.body)['data']).to be_a Hash
+      expect(JSON.parse(response.body)['data']['type']).to eq('item')
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:attributes]).to eq(
+        { name: new_item.name,
+          description: new_item.description,
+          unit_price: new_item.unit_price,
+          merchant_id: @merchant.id }
+      )
+    end
 
-    expect(response).to be_successful
-    expect(JSON.parse(response.body)['data']).to be_a Hash
-    expect(JSON.parse(response.body)['data']['type']).to eq('item')
-    expect(JSON.parse(response.body, symbolize_names: true)[:data][:attributes]).to eq(
-      { name: new_item.name,
-        description: new_item.description,
-        unit_price: new_item.unit_price,
-        merchant_id: @merchant.id }
-    )
+    it 'should not create a new item if it is invalid' do
+      bad_item = create(:item, merchant_id: @merchant.id)
+      post '/api/v1/items/', params: {
+        "name": bad_item.name,
+        "description": bad_item.description,
+        "unit_price": bad_item.unit_price,
+        "merchant_id": 'eleventy'
+      }
+      expect(response).to have_http_status(400)
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to be_an Array
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to be_an Array
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors][0][:status]).to eq(400)
+    end
   end
 
   describe 'updating an item' do

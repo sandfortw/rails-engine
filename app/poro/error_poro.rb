@@ -23,4 +23,22 @@ class ErrorPoro
       ]
     }
   end
+
+  def cerealize 
+    {
+      data: {
+        type: 'error',
+        id: nil,
+        attributes: {}
+      },
+
+      errors: [
+        {
+          status: @status,
+          title: @message,
+          detail: @message
+        }
+      ]
+    }
+  end
 end
