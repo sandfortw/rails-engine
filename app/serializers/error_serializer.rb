@@ -6,7 +6,7 @@ class ErrorSerializer
   def serialized_json
     {
       data: [{
-        type: 'articles',
+        type: 'error',
         id: nil,
         attributes: {}
       }],

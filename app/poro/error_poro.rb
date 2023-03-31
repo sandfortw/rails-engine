@@ -8,12 +8,19 @@ class ErrorPoro
 
   def serialize
     {
-      data:
-        {
+      data: [{
+        type: 'error',
+        id: nil,
+        attributes: {}
+      }],
 
+      errors: [
+        {
           status: @status,
+          title: @message,
           detail: @message
         }
+      ]
     }
   end
 end
