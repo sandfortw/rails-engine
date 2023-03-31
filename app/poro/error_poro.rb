@@ -24,7 +24,7 @@ class ErrorPoro
     }
   end
 
-  def cerealize 
+  def cerealize
     {
       data: {
         type: 'error',

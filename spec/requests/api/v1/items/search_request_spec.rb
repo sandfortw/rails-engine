@@ -60,10 +60,25 @@ RSpec.describe 'Search Request API', type: :request do
   end
 
   describe '/items/find' do
+
+    it 'can find an item' do
+      get '/api/v1/items/find?name=hello'
+
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:id]).to eq(@item_a.id.to_s)
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:type]).to eq('item')
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:attributes]).to eq({
+        name: @item_a.name,
+        description: @item_a.description,
+        unit_price: @item_a.unit_price,
+        merchant_id: @item_a.merchant_id
+      })
+
+    end
     it 'NOMATCH' do
       get '/api/v1/items/find?name=NOMATCH'
 
-      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq({:attributes=>{}, :id=>nil, :type=>"error"})
+      expect(JSON.parse(response.body,
+                        symbolize_names: true)[:data]).to eq({ attributes: {}, id: nil, type: 'error' })
     end
   end
 end
