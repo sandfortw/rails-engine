@@ -13,7 +13,6 @@ describe 'items api' do
 
   it 'can return many items' do
     get '/api/v1/items'
-
     expect(response).to be_successful
     expect(JSON.parse(response.body)).to be_a Hash
     expect(JSON.parse(response.body)['data']).to be_an Array

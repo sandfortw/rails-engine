@@ -23,7 +23,7 @@ module Api
         if item.update(item_params)
           render json: ItemSerializer.new(item), status: :accepted
         else
-          render status: :bad_request
+          render json: ErrorPoro.new('Bad Request', 400), status: :bad_request
         end
       end
 
