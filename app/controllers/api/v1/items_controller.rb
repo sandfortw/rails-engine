@@ -15,7 +15,11 @@ module Api
 
       def create
         item = Item.create(item_params)
-        render json: ItemSerializer.new(item), status: :created if item.save
+        if item.save
+          render json: ItemSerializer.new(item), status: :created
+        else
+          render json: ErrorPoro.new('Bad Request', 400).serialize, status: :bad_request
+        end
       end
 
       def update
@@ -23,7 +27,7 @@ module Api
         if item.update(item_params)
           render json: ItemSerializer.new(item), status: :accepted
         else
-          render json: ErrorPoro.new('Bad Request', 400), status: :bad_request
+          render json: ErrorPoro.new('Bad Request', 400).serialize, status: :bad_request
         end
       end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ErrorSerializer
   def initialize(error)
     @error = error
@@ -6,7 +8,7 @@ class ErrorSerializer
   def serialized_json
     {
       data: [{
-        type: 'articles',
+        type: 'error',
         id: nil,
         attributes: {}
       }],

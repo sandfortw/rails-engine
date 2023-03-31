@@ -6,7 +6,7 @@ module Api
       class SearchController < ApplicationController
         def index
           if Item.find_all(params).nil? || invalid_search(params)
-            render json: { data: [], errors: 'Bad Request' }, status: :bad_request
+            render json: ErrorPoro.new('Bad Request', 400).serialize, status: :bad_request
           else
             render json: ItemSerializer.new(Item.find_all(params))
           end
@@ -15,7 +15,7 @@ module Api
         def show
           item = Item.find_one(params)
           if invalid_search(params) || item.nil?
-            render json: { data: {}, errors: 'Bad Request' }, status: :bad_request
+            render json: ErrorPoro.new('Bad Request', 400).cerealize, status: :bad_request
           else
             render json: ItemSerializer.new(item)
           end

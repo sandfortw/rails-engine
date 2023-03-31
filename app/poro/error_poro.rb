@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ErrorPoro
   attr_reader :message, :status
 
@@ -8,12 +10,37 @@ class ErrorPoro
 
   def serialize
     {
-      data:
-        {
+      data: [{
+        type: 'error',
+        id: nil,
+        attributes: {}
+      }],
 
+      errors: [
+        {
           status: @status,
+          title: @message,
           detail: @message
         }
+      ]
+    }
+  end
+
+  def cerealize
+    {
+      data: {
+        type: 'error',
+        id: nil,
+        attributes: {}
+      },
+
+      errors: [
+        {
+          status: @status,
+          title: @message,
+          detail: @message
+        }
+      ]
     }
   end
 end

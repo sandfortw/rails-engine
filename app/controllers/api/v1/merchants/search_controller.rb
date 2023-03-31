@@ -6,12 +6,12 @@ module Api
       class SearchController < ApplicationController
         def index
           merchants = Merchant.find_all(params[:name]) unless params[:name].blank?
-          if !merchants.blank? 
+          if !merchants.blank?
             render json: MerchantSerializer.new(merchants)
           elsif merchants.nil?
-            render json: { message: 'No Merchants Found', data: [] }, status: 400
+            render json: ErrorPoro.new('Bad Request', 400).serialize, status: :bad_request
           else
-            render json: { message: 'No Merchants Found', data: [] }
+            render json: MerchantSerializer.new(merchants)
           end
         end
 
@@ -19,10 +19,8 @@ module Api
           merchant = Merchant.find_one(params[:name]) unless params[:name].blank?
           if !merchant.blank? || params[:name].blank?
             render json: MerchantSerializer.new(merchant)
-          elsif merchant.nil? && params[:name].blank?
-            render json: { message: 'No Merchants Found', data: [] }, status: 400
           else
-            render json: {detail: "No merchant found", :status=>200, data:{}}
+            render json: ErrorPoro.new('Bad Request', 200).cerealize, status: :ok
           end
         end
       end
